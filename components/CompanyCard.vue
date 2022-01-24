@@ -96,4 +96,12 @@ export default {
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .card {
+    margin-bottom: 5px;
+  }
+  .card__img {
+    display: none;
+  }
+}
 </style>

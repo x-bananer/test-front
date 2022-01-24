@@ -510,6 +510,9 @@ export default {
     font-weight: 600;
     font-size: 16px;
   }
+  .companies__content {
+    margin-bottom: 15px;
+  }
   .search {
     margin-bottom: 20px;
     display: flex;
