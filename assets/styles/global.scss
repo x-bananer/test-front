@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Raleway:wght@400;500;600&family=Rubik:wght@300;400&display=swap');
+html {
+  height: 100%;
+}
+body {
+  position: relative;
+  min-height: 100%;
+  font-family: 'Rubik', Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.42;
+  color: #000000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: visible;
+}
+@for $i from 1 to 6 {
+  h#{$i} {
+    margin: 0;
+  }
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+p {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  min-height: 150px;
+}
+.container {
+  max-width: 1200px;
+  padding: 0px 36px;
+  margin: 0 auto;
+}
+.tag {
+  display: inline-block;
+  background: #f7f7f7;
+  border-radius: 200px;
+  padding: 6px 22px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #333333;
+}
+.tag:last-child {
+  margin-right: 0;
+}
+.back {
+  position: relative;
+  display: block;
+  margin-left: 30px;
+  color: #030953;
+  margin-bottom: 13px;
+}
+.back:before {
+  content: "";
+  display: inline;
+  position: absolute;
+  height: 14px;
+  width: 19px;
+  left: -30px;
+  top: 2px;
+  background-image: url("../icons/Back.svg");
+  cursor: pointer;
+}
+.big-and-red {
+  font-size: 60px;
+  color: #EF3E4A;
+  line-height: 0.9;
+}
+.rubik {
+  font-family: 'Rubik', Helvetica, sans-serif;
+  font-weight: 400;
+}
+.red {
+  background: #EF3E4A;
+}
+.blue {
+  background: #030953;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 8px;
+  }
+}
+.body-block {
+  overflow: hidden;
+}
+.body-unblock {
+  overflow: visible;
+}
