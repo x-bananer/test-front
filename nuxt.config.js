@@ -1,7 +1,7 @@
 export default {
   target: 'static',
   router: {
-    base: '/'
+    base: '/test-front'
   },
   head: {
     title: 'Duotek [Test]',
