@@ -228,13 +228,9 @@
     }
   }
 }
-
 @media screen and (max-width: 768px) {
   .footer {
     height: 450px;
-  }
-  .footer__section {
-    border-top: none;
   }
   .footer__container {
     padding: 50px 8px 50px;
@@ -247,6 +243,9 @@
     flex-direction: column;
     align-items: center;
   }
+  .cols {
+    justify-content: space-around;
+  }
   .col__item {
     margin: 8px 0;
   }
@@ -254,5 +253,4 @@
     display: none;
   }
 }
-
 </style>

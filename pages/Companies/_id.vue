@@ -61,6 +61,7 @@
           <div class="info__logo">
             <img :src="company.picture" alt="" />
           </div>
+          <div class="info__mobile">Информация</div>
           <div class="info__desc">
             <div class="info__title">Сайт:</div>
             <div v-if="company.url" class="info__content">
@@ -151,6 +152,7 @@ export default {
 <style scoped lang="scss">
 .company {
   padding: 40px 0;
+  margin-bottom: 45px;
   &__container {
     margin-bottom: 26px;
   }
@@ -209,6 +211,12 @@ export default {
     color: #030953;
     cursor: pointer;
   }
+  &__mobile {
+    display: none;
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
 }
 .features {
   &__group {
@@ -221,6 +229,35 @@ export default {
     font-size: 18px;
     line-height: 1;
     margin-bottom: 24px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .company__content {
+    flex-direction: column;
+  }
+  .company__left {
+    flex-basis: 0;
+    margin-bottom: 40px;
+  }
+  .company__info {
+    padding: 0;
+  }
+  .info__logo {
+    display: none
+  }
+  .info__desc {
+    display: flex;
+  }
+  .info__title {
+    margin-right: 10px;
+  }
+  .info__mobile {
+    display: block;
+  }
+}
+@media screen and (max-width: 576px) {
+  .card__tags {
+    font-size: 8px;
   }
 }
 </style>
