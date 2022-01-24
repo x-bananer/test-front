@@ -53,7 +53,10 @@
           </div>
         </div>
         <div class="companies__right">
-          <div class="select select__mobile" ref="select">
+          <div
+            class="select select__mobile"
+            ref="select"
+          >
             <div class="select__body">
               <span class="select__close" v-on:click="closeFilters()">
                 <img src="../../assets/icons/CloseIcon.svg" alt="close" />
@@ -79,7 +82,6 @@
                 </div>
               </client-only>
             </div>
-
             <div class="select__body">
               <label class="select__label">Специализация</label>
               <div class="select__header">
@@ -486,7 +488,6 @@ export default {
 @media screen and (max-width: 768px) {
   .select__mobile {
     position: absolute;
-    bottom: 0;
     top: 0;
     left: -225px;
     top: 150px;
@@ -512,6 +513,9 @@ export default {
   }
   .companies__content {
     margin-bottom: 15px;
+  }
+  .companies__right {
+    padding: 0;
   }
   .search {
     margin-bottom: 20px;
