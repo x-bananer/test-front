@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Raleway:wght@400;500;600&family=Rubik:wght@300;400&display=swap');
+
 html {
   height: 100%;
 }
+
 body {
   position: relative;
   min-height: 100%;
@@ -14,38 +16,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: visible;
 }
+
 @for $i from 1 to 6 {
   h#{$i} {
     margin: 0;
   }
 }
+
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 img {
   display: block;
   max-width: 100%;
 }
+
 p {
   margin: 0;
 }
+
 a {
   text-decoration: none;
   color: inherit;
 }
+
 button {
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 0;
 }
+
 *,
 *:after,
 *:before {
   box-sizing: border-box;
 }
+
 .wrapper {
   position: relative;
   width: 100%;
@@ -53,11 +63,13 @@ button {
   overflow: hidden;
   min-height: 165px;
 }
+
 .container {
   max-width: 1200px;
   padding: 0px 36px;
   margin: 0 auto;
 }
+
 .tag {
   display: inline-block;
   background: #f7f7f7;
@@ -67,9 +79,11 @@ button {
   margin-bottom: 5px;
   color: #333333;
 }
+
 .tag:last-child {
   margin-right: 0;
 }
+
 .back {
   position: relative;
   display: block;
@@ -77,6 +91,7 @@ button {
   color: #030953;
   margin-bottom: 13px;
 }
+
 .back:before {
   content: "";
   display: inline;
@@ -88,29 +103,90 @@ button {
   background-image: url("../icons/Back.svg");
   cursor: pointer;
 }
+
 .big-and-red {
   font-size: 60px;
   color: #EF3E4A;
   line-height: 0.9;
 }
+
 .rubik {
   font-family: 'Rubik', Helvetica, sans-serif;
   font-weight: 400;
 }
+
 .red {
   background: #EF3E4A;
 }
+
 .blue {
   background: #030953;
 }
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 8px;
   }
 }
+
 .body-block {
   overflow: hidden;
 }
+
 .body-unblock {
   overflow: visible;
+}
+
+.back-light {
+  background: none;
+
+  .header__section {
+    .header__container {
+      .header__logo {
+        .logo-light {
+          svg {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.back-dark {
+  background: #030953;
+
+  .header__section {
+    .header__container {
+      .header__logo {
+        .logo-dark {
+          svg {
+            display: none;
+          }
+        }
+      }
+
+      .header__menu {
+        .header__link {
+          color: #FFF;
+        }
+      }
+
+      .menu__opened {
+        background: #030953;
+      }
+
+      .header__login {
+        .header__link {
+          color: #FFF;
+        }
+      }
+
+      .header__hamburger {
+        .hamburger__plank {
+          background: #FFF;
+        }
+      }
+    }
+  }
 }

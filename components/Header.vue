@@ -1,10 +1,13 @@
 <template>
-  <header class="header">
+  <header class="header" :class="background">
     <section class="header__section">
       <div class="header__container container">
         <div class="header__logo logo">
-          <nuxt-link no-prefetch exact to="/" class="logo__icon">
+          <nuxt-link no-prefetch exact to="/" class="logo__icon logo-dark">
             <Icon name="Logo" />
+          </nuxt-link>
+          <nuxt-link no-prefetch exact to="/" class="logo__icon logo-light">
+            <Icon name="LogoLight" />
           </nuxt-link>
         </div>
         <nav class="header__menu menu menu__opened" ref="menu">
@@ -103,6 +106,16 @@ export default {
       this.needBlocked = false;
     },
   },
+  computed: {
+    background() {
+      if(this.$route.name === 'Companies-id') {
+        return 'back-dark'
+      } else {
+        return 'back-light'
+      }
+
+    }
+  }
 };
 </script>
 
