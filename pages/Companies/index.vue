@@ -159,13 +159,6 @@ export default {
     await store.dispatch("companies/fetchCompanies", data);
     await store.dispatch("companies/fetchDefinitions");
   },
-  head() {
-    return {
-      bodyAttrs: {
-        class: this.needBlocked ? "body-block" : "body-unblock",
-      },
-    };
-  },
   created() {
     this.filters.search = this.$route.query.search;
     if (this.$route.query.specialization) {
