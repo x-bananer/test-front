@@ -1,5 +1,5 @@
 <template>
-  <header class="header" :class="background">
+  <header class="header" :class="this.$route.name === 'Companies-id' ? 'back-dark' : 'back-light'">
     <section class="header__section">
       <div class="header__container container">
         <div class="header__logo logo">
@@ -10,8 +10,8 @@
             <Icon name="LogoLight" />
           </nuxt-link>
         </div>
-        <nav class="header__menu menu menu__opened" ref="menu">
-          <span class="menu__close" ref="close" v-on:click="closeMenu()">
+        <nav class="header__menu menu menu__opened" :class="menuOpened ? 'd-flex' : 'd-none-mobile'">
+          <span class="menu__close" :class="closeMenuButton ? 'd-block' : 'd-none'" v-on:click="closeMenu()">
           </span>
           <nuxt-link
             no-prefetch
@@ -58,6 +58,7 @@
             <span v-on:click="closeMenu()">Блог</span>
           </nuxt-link>
         </nav>
+
         <div class="header__login">
           <nuxt-link no-prefetch exact to="/" class="header__link"
             >Вход и регистрация</nuxt-link
@@ -84,6 +85,8 @@ export default {
   data() {
     return {
       needBlocked: false,
+      closeMenuButton: false,
+      menuOpened: false,
     };
   },
   head() {
@@ -96,26 +99,15 @@ export default {
   methods: {
     openMenu() {
       this.needBlocked = true;
-      this.$refs.menu.classList.add("menu__opened");
-      this.$refs.menu.style.display = "flex";
-      this.$refs.close.style.display = "block";
+      this.closeMenuButton = true;
+      this.menuOpened = true;
     },
     closeMenu() {
-      this.$refs.menu.style.display = "";
-      this.$refs.close.style.display = "none";
+      this.closeMenuButton = false;
       this.needBlocked = false;
+      this.menuOpened = false;
     },
   },
-  computed: {
-    background() {
-      if(this.$route.name === 'Companies-id') {
-        return 'back-dark'
-      } else {
-        return 'back-light'
-      }
-
-    }
-  }
 };
 </script>
 
@@ -162,9 +154,6 @@ $brandColor: #030953;
     border-radius: 10px;
   }
 }
-.menu__close {
-  display: none;
-}
 
 @media screen and (max-width: 768px) {
   .hamburger {
@@ -172,7 +161,6 @@ $brandColor: #030953;
   }
   .menu {
     &__close {
-      display: none;
       cursor: pointer;
       position: absolute;
       right: 16px;
@@ -183,7 +171,6 @@ $brandColor: #030953;
       background: url("../assets/icons/CloseIcon.svg") center center no-repeat;
     }
     &__opened {
-      display: none;
       position: fixed;
       background-color: #f2f2f2;
       top: 0;
@@ -211,4 +198,5 @@ $brandColor: #030953;
     }
   }
 }
+
 </style>

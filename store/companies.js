@@ -19,14 +19,16 @@ export const mutations = {
 export const actions = {
   async fetchCompanies({ commit }, filter) {
     let companies = null;
-    if (!filter.industry && !filter.specialization) {
-      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&per_page=10&page=${filter.page}`);
+    if (!filter.industry && !filter.specialization && !filter.search) {
+      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&per_page=10&page=${filter.page || 1}`);
+    } else if(!filter.industry && !filter.specialization && filter.search) {
+      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&per_page=15&page=${''}`);
     } else if (!filter.industry && filter.specialization) {
-      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&specialization=${filter.specialization || ''}&per_page=10&page=${filter.page}`);
+      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&specialization=${filter.specialization || ''}&per_page=15&page=${''}`);
     } else if (filter.industry && !filter.specialization) {
-      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&industry=${filter.industry || ''}&per_page=10&page=${filter.page}`);
+      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&industry=${filter.industry || ''}&per_page=15&page=${''}`);
     } else {
-      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&specialization=${filter.specialization || ''}&industry=${filter.industry || ''}&per_page=10&page=${filter.page}`);
+      companies = await this.$axios.$get(`http://api-test.duotek.ru/companies?search=${filter.search || ''}&specialization=${filter.specialization || ''}&industry=${filter.industry || ''}&per_page=15&page=${''}`);
     }
     commit('setCompanies', companies);
   },

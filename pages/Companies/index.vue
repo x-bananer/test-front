@@ -13,16 +13,14 @@
                   id="search"
                   placeholder="Поиск продукта или отрасли"
                   class="search__input"
-                  :value="filters.search"
-                  v-on:change="filters.search = $event.target.value"
-                  v-on:keyup.enter="filters.search = $event.target.value"
+                  v-model.trim.lazy="filters.search"
                 />
                 <button
                   v-on:click="resetSearchFilter()"
                   class="search__reset"
                   v-if="filters.search"
                 >
-                  <img src="../../assets/icons/Close.png" alt="close" />
+                  <img src="../../assets/icons/CloseIcon.svg" alt="close" />
                 </button>
               </label>
               <button v-on:click="setFilters()" class="search__btn">
@@ -47,15 +45,14 @@
             </nuxt-link>
           </div>
           <div v-else class="placeholder">
-            <img src="../../assets/icons/SadFace.png" alt="" />
-            <p>Ничего не удалось найти</p>
+            <p>Ничего не удалось найти.</p>
             <p>Попробуйте изменить условия поиска</p>
           </div>
         </div>
         <div class="companies__right">
           <div
             class="select select__mobile"
-            ref="select"
+            :class="openMobileFilers ? 'open-filters' : 'close-filters'"
           >
             <div class="select__body">
               <span class="select__close" v-on:click="closeFilters()">
@@ -66,12 +63,12 @@
                 <div class="select__header">
                   <select
                     v-on:change="setFilters()"
-                    v-model="filters.industries"
+                    v-model="filters.industry"
                   >
                     <option default value="">Все отрасли</option>
                     <option
-                      v-for="(industry, index) in definitions.Industry"
-                      :key="index"
+                      v-for="industry in definitions.Industry"
+                      :key="industry.ident"
                       :value="industry.id"
                       :id="industry.id"
                       class="select__option"
@@ -92,10 +89,8 @@
                   >
                     <option default value="">Все специализации</option>
                     <option
-                      v-for="(
-                        specialization, index
-                      ) in definitions.CompanySpecialization"
-                      :key="index"
+                      v-for="specialization in definitions.CompanySpecialization"
+                      :key="specialization.ident"
                       :value="specialization.id"
                       :id="specialization.id"
                       class="select__option"
@@ -109,19 +104,15 @@
           </div>
         </div>
       </div>
-      <div v-if="companies.data.length !== 0" class="paging">
+      <div v-if="companies.data.length !== 0 && companies.meta.last_page > 1" class="paging">
         <ul class="paging__list pages">
           <li
             class="page"
             v-for="(page, index) in companies.meta.last_page"
             :key="index"
+            v-on:click="setFilters()"
           >
-            <button
-              ref="page"
-              v-on:click="
-                (filters.page = page), setFilters(), focusPage($event)
-              "
-            >
+            <button :class="focusPage(page)" v-on:click="setPage(page)">
               {{ page }}
             </button>
           </li>
@@ -143,51 +134,32 @@ export default {
       filters: {
         search: "",
         page: "",
-        industries: "",
+        industry: "",
         specialization: "",
       },
       needBlocked: false,
+      openMobileFilers: false,
     };
+  },
+  created() {
+    Object.assign(this.filters, this.$route.query);
   },
   async fetch({ store }) {
     const data = {
       search: this.filters.search,
       specialization: this.filters.specialization,
-      industry: this.filters.industries,
+      industry: this.filters.industry,
       page: this.filters.page,
     };
     await store.dispatch("companies/fetchCompanies", data);
     await store.dispatch("companies/fetchDefinitions");
-  },
-  created() {
-    this.filters.search = this.$route.query.search;
-    if (this.$route.query.specialization) {
-      const specialization = this.definitions.CompanySpecialization.find(
-        (el) => el.id == this.$route.query.specialization
-      );
-      this.filters.specialization = specialization.id;
-    }
-    if (this.$route.query.industry) {
-      const industry = this.definitions.Industry.find(
-        (el) => el.id == this.$route.query.industry
-      );
-      this.filters.industries = industry.id;
-    }
-    this.filters.page = this.$route.query.page;
-  },
-  mounted() {
-    if (this.$route.query.page) {
-      this.$refs.page[this.$route.query.page - 1].classList.add("active");
-    } else {
-      this.$refs.page[0].classList.add("active");
-    }
   },
   methods: {
     setFilters() {
       const data = {
         search: this.filters.search,
         specialization: this.filters.specialization,
-        industry: this.filters.industries,
+        industry: this.filters.industry,
         page: this.filters.page,
       };
       this.$store.dispatch("companies/fetchCompanies", data);
@@ -195,7 +167,7 @@ export default {
         path: this.$route.path,
         query: {
           search: this.filters.search,
-          industry: this.filters.industries,
+          industry: this.filters.industry,
           specialization: this.filters.specialization,
           page: this.filters.page,
         },
@@ -205,19 +177,23 @@ export default {
       this.filters.search = "";
       this.setFilters();
     },
-    focusPage(event) {
-      for (let i = 0; i < this.$refs.page.length; i++) {
-        this.$refs.page[i].classList.remove("active");
+    setPage(page) {
+      this.filters.page = page;
+    },
+    focusPage(page) {
+      if (this.filters.page) {
+        return page === Number(this.filters.page) ? "active" : "";
+      } else {
+        return page === 1 ? "active" : "";
       }
-      event.target.classList.add("active");
     },
     openFilters() {
       this.needBlocked = true;
-      this.$refs.select.style.left = "-5px";
+      this.openMobileFilers = true;
     },
     closeFilters() {
       this.needBlocked = false;
-      this.$refs.select.style.left = "-225px";
+      this.openMobileFilers = false;
     },
   },
   computed: {
@@ -234,7 +210,7 @@ export default {
         const data = {
           search: newValue.search,
           specialization: newValue.specialization,
-          industry: newValue.industries,
+          industry: newValue.industry,
           page: newValue.page,
         };
         this.$store.dispatch("companies/fetchCompanies", data);
@@ -335,7 +311,6 @@ export default {
   &__reset {
     width: 24px;
     height: 24px;
-    opacity: 0.4;
   }
   &__btn {
     padding: 10px 18px;
@@ -432,6 +407,12 @@ export default {
     display: none;
   }
 }
+.open-filters {
+  left: -5px;
+}
+.close-filters {
+  left: -225px;
+}
 .placeholder {
   display: flex;
   flex-direction: column;
@@ -482,7 +463,6 @@ export default {
   .select__mobile {
     position: absolute;
     top: 0;
-    left: -225px;
     top: 150px;
     z-index: 4;
     transition: 0.3s;
